@@ -11,6 +11,7 @@
     <ul>
         <li><a href="/lab4/task4-1.php">Список автомобилей</a></li>
         <li><a href="/lab5/car_market_page.php">Список автосалонов</a></li>
+        <li><a href="/lab5/cars_in_store_page.php">Автомобили в наличии</a></li>
     </ul>
 </body>
 </html>
