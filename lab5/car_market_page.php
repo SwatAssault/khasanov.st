@@ -20,9 +20,9 @@
 				echo "<tr>";
 				echo "<td>" . $row['name'] . "</td>";
                 echo "<td>" . $row['address'] . "</td>";
-				echo "<td><a href='task4_edit.php?car_id=" . $row['car_id']
+				echo "<td><a href='car_market_edit_page.php?id=" . $row['id']
 				. "'>Редактировать</a></td>";
-				echo "<td><a href='task4_delete.php?car_id=" . $row['car_id']
+				echo "<td><a href='car_market_delete.php?id=" . $row['id']
 				. "'>Удалить</a></td>";
 				echo "</tr>";
 			}
