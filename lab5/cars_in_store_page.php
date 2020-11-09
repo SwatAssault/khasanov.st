@@ -47,7 +47,7 @@
 
         $mysqli->close();
         
-        echo "<a href='gen_xls.php'>Создать таблицу Excel</a>";
+        echo "<br><a href='gen_xls.php'>Создать таблицу Excel</a>";
 
         function getCarById($car_id, $mysqli) {
             $car_request = $mysqli->query("SELECT mark, model, year, transmition, cost FROM `cars` WHERE car_id=".$car_id);

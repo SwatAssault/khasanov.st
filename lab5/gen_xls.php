@@ -1,10 +1,10 @@
 <?php
 
-    include_once('PHPExcel/PHPExcel.php');
-    $document = new \PHPExcel();
-    $objWriter = \PHPExcel_IOFactory::createWriter($document, 'Excel5');
+    require_once('../PHPExcel-1.8/Classes/PHPExcel.php');
+    $excel = new PHPExcel();
+
     
-    $objWriter->save("carsInStore.xls");
+    
 
 
 ?>
