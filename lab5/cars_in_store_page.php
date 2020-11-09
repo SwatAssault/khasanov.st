@@ -37,7 +37,6 @@
 				. "'>Редактировать</a></td>";
 				echo "<td><a href='delete_car_from_store.php?id=" . $row['id']
                 . "'>Убрать с продажи</a></td>";
-                echo "<td><a href='delete_car.php?car_id=" . $row['car_id'] . "&id=".$row['id']."'>Убрать со списанием</a></td>";
 				echo "</tr>";
 			}
 			print "</table>";

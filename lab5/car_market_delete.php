@@ -5,6 +5,10 @@
 
 	$zapros = "DELETE FROM car_market WHERE id=" . $_GET['id'];
 	mysqli_query($link, $zapros);
+
+	$car_market_query = "DELETE FROM cars_in_store WHERE car_market_id=" . $_GET['id'];
+	mysqli_query($link, $car_market_query);
+
 	header("Location: car_market_page.php");
 	exit;
 ?>
