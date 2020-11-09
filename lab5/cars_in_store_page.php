@@ -33,7 +33,7 @@
                     echo "<td>" . $value . "</td>";
                 }
 
-				echo "<td><a href='car_market_edit_page.php?id=" . $row['id']
+				echo "<td><a href='car_in_store_edit_page.php?id=" . $row['id']
 				. "'>Редактировать</a></td>";
 				echo "<td><a href='delete_car_from_store.php?id=" . $row['id']
                 . "'>Убрать с продажи</a></td>";
@@ -43,10 +43,12 @@
 			$num_rows = mysqli_num_rows($result); // число записей в таблице БД
 			print("<P>Всего автомобилей в наличии: $num_rows </p>");
 
-			echo "<a href='put_car_to_store_page.php'>Выставить автомобиль на продажу</a>";
+			echo "<a href='put_car_to_store_page.php'>Выставить автомобиль на продажу</a><br>";
 
         $mysqli->close();
         
+        echo "<a href='gen_xls.php'>Создать таблицу Excel</a>";
+
         function getCarById($car_id, $mysqli) {
             $car_request = $mysqli->query("SELECT mark, model, year, transmition, cost FROM `cars` WHERE car_id=".$car_id);
             $car = mysqli_fetch_array($car_request);
