@@ -64,7 +64,9 @@
         $objWriter->save("carsInStore.xls");
         
         echo "Файл успешно сохранен<br><br>";
-        echo "<a href='carsInStore.xls'>Скачать файл</a>";
+        echo "<a href='carsInStore.xls'>Скачать файл</a><br>";
+
+        echo "<a href='carsInStore.pdf'>Сохранить в PDF</a><br>";
 
         function getCarById($car_id, $mysqli) {
             $car_request = $mysqli->query("SELECT mark, model, year, transmition, cost FROM `cars` WHERE car_id=".$car_id);
