@@ -5,8 +5,8 @@
     <title>Хасанов Р.М. ИВТ-417</title>
 </head>
 <body>
-    
     <?php
+        error_reporting(0);
         echo "<h2><a href='cars_in_store_page.php'>Назад</a></h2>";
         require_once('../PHPExcel-1.8/Classes/PHPExcel.php');
         $document = new PHPExcel();
@@ -63,6 +63,9 @@
         $objWriter = \PHPExcel_IOFactory::createWriter($document, 'Excel5');
         $objWriter->save("carsInStore.xls");
         
+        echo "Файл успешно сохранен<br><br>";
+        echo "<a href='carsInStore.xls'>Скачать файл</a>";
+
         function getCarById($car_id, $mysqli) {
             $car_request = $mysqli->query("SELECT mark, model, year, transmition, cost FROM `cars` WHERE car_id=".$car_id);
             $car = mysqli_fetch_array($car_request);
