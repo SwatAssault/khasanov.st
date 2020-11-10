@@ -12,6 +12,7 @@
 		<li><a href="lab2/lab2.php">Лабораторная работа №2</a></li>
 		<li><a href="lab3/lab3.php">Лабораторная работа №3</a></li>
 		<li><a href="lab4/lab4.php">Лабораторная работа №4</a></li>
+		<li><a href="lab5/lab5.php">Лабораторная работа №5</a></li>
 	</ul>
 </body>
 </html>
