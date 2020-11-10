@@ -1,12 +1,14 @@
 <?php
     //require('../fpdf182/fpdf.php');
 
-    require('../fpdf/fpdf.php');
+    require('../tfpdf/tfpdf.php');
 
-    class PDF extends FPDF {
+    class PDF extends tFPDF {
 
         function BasicTable($header, $result, $mysqli) {
            
+            
+
             // Header
             $this->Cell(5, 6, "№", 1);
             unset($header[0]);
@@ -39,7 +41,9 @@
 
     $pdf = new PDF();
 
-    $pdf->SetFont('Arial','',10);
+    $pdf->AddFont('DejaVu', '', 'DejaVuSansCondensed.ttf', true);
+    $pdf->SetFont('DejaVu', '', 10);
+
     $pdf->AddPage();
     $pdf->BasicTable($column_titles, $result, $mysqli);
 
