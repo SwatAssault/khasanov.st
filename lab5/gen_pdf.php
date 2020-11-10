@@ -1,19 +1,14 @@
 <?php
-    //require('../fpdf182/fpdf.php');
-
     require('../tfpdf/tfpdf.php');
 
     class PDF extends tFPDF {
 
         function BasicTable($header, $result, $mysqli) {
-           
-            
-
             // Header
             $this->Cell(5, 6, "№", 1);
             unset($header[0]);
             foreach($header as $col) {
-                $this->Cell(27, 6, $col, 1);
+                $this->Cell(35, 6, $col, 1);
             }
             $this->Ln();
 
@@ -24,13 +19,11 @@
                 $this->Cell(5, 6, $n, 1);
                 $line = getLine($n, $row['car_id'], $row['car_market_id'], $mysqli);
                 foreach ($line as $value) {
-                    $this->Cell(27, 6, $value, 1); 
+                    $this->Cell(35, 6, $value, 1); 
                 }
                 $this->Ln();
             }
         }
-
-
     }
 
     $mysqli = new mysqli("localhost", "mysql", "mysql");
@@ -44,7 +37,7 @@
     $pdf->AddFont('DejaVu', '', 'DejaVuSansCondensed.ttf', true);
     $pdf->SetFont('DejaVu', '', 10);
 
-    $pdf->AddPage();
+    $pdf->AddPage('L');
     $pdf->BasicTable($column_titles, $result, $mysqli);
 
 
