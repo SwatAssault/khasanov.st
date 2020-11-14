@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Хасанов Р.М. ИВТ-417</title>
-</head>
-<body>
-    <?php
+<?php
         error_reporting(0);
-        echo "<h2><a href='cars_in_store_page.php'>Назад</a></h2>";
+        // echo "<h2><a href='cars_in_store_page.php'>Назад</a></h2>";
+        
+        header('Content-Type: application/vnd.ms-excel'); //mime type
+        header('Content-Disposition: attachment;filename="carsInStore.xls"'); //tell browser what's the file name
+        header('Cache-Control: max-age=0'); //no cache
+        
+
         require_once('../PHPExcel-1.8/Classes/PHPExcel.php');
+
         $document = new PHPExcel();
 
         $sheet = $document->setActiveSheetIndex(0); // Выбираем первый лист в документе
@@ -60,11 +60,17 @@
             $document->getActiveSheet()->getColumnDimension($columnID) ->setAutoSize(true); 
         } 
 
-        $objWriter = \PHPExcel_IOFactory::createWriter($document, 'Excel5');
-        $objWriter->save("carsInStore.xls");
         
-        echo "Файл успешно сохранен<br><br>";
-        echo "<a href='carsInStore.xls'>Скачать файл</a><br>";
+        // $objWriter->save("carsInStore.xls");
+       
+       /* echo "Файл успешно сохранен<br><br>";
+        echo "<a href='carsInStore.xls'>Скачать файл</a><br>";*/
+
+        
+        $objWriter = \PHPExcel_IOFactory::createWriter($document, 'Excel5');
+        ob_clean();
+        $objWriter->save('php://output');
+        
 
         function getCarById($car_id, $mysqli) {
             $car_request = $mysqli->query("SELECT mark, model, year, transmition, cost FROM `cars` WHERE car_id=".$car_id);
@@ -80,6 +86,3 @@
 
 
     ?>
-
-</body>
-</html>

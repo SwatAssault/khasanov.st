@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ИВТ-417 Хасанов Р.М.</title>
+</head>
+<body>
+
+    <h2><a href="lab7.php">На главную</a></h2>
+
+    <a href="#" onclick='foo(this);'>Загрузить PDF</a>
+
+    <a href='#' onmouseover='changeOver();' onmouseout='changeBack();'>Наведись на меня</a>
+
+    <script> 
+       function changeOver() {
+            document.body.style.background = "red";
+       }
+
+       function changeBack() {
+            document.body.style.background = "white";
+       }
+
+       function foo(a) {
+           if (confirm("Необходимо скачать Acrobat. Вы уверены?")) {
+               a.onClick='';
+                a.download = "file.pdf";
+                a.click();
+           } else {
+
+           }
+       }
+    </script>
+
+</body>
+</html>
