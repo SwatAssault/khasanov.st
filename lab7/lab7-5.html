@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ИВТ-417 Хасанов Р.М.</title>
+</head>
+<body>
+
+    <h2><a href="lab7.php">На главную</a></h2>
+
+    <img src="pic.jpg" alt="Картинки нет" onmouseover='magnify(this);' onmouseout='minimize(this);'>
+
+    <script> 
+        function magnify(pic) {
+            pic.height *= 1.2;
+            pic.width *= 1.2;
+        }
+
+        function minimize(pic) {
+            pic.height /= 1.2;
+            pic.width /= 1.2;
+        }
+    </script>
+</body>
+</html>
