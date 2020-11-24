@@ -14,23 +14,21 @@
     <a href='#' onmouseover='changeOver();' onmouseout='changeBack();'>Наведись на меня</a>
 
     <script> 
-       function changeOver() {
+        function changeOver() {
             document.body.style.background = "pink";
-       }
+        }
 
-       function changeBack() {
+        function changeBack() {
             document.body.style.background = "white";
-       }
+        }
 
-       function foo(a) {
-           if (confirm("Необходимо скачать Acrobat. Вы уверены?")) {
-               a.onClick='';
-                a.download = "file.pdf";
-                a.click();
-           } else {
-
-           }
-       }
+        function foo(a) {
+            if (confirm('Необходимо скачать Acrobat. Продолжить?')) {
+                alert('Скачиваем');
+            } else {
+                alert('Не скачиваем');
+            }
+        }
     </script>
 
 </body>
