@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Хасанов Р.М. ИВТ-417</title>
+    <script src="jquery.js"></script>
+</head>
+<body>
+    <h2><a href="lab8.php">На главную</a></h2>
+
+    <script>
+        $(document).ready(function(){
+
+            var posX = $("#x");
+            var posY = $("#y");
+            $(document).mousemove(function(event) {
+                posX.text("X: " + event.pageX);
+                posY.text("Y: " + event.pageY);
+            });
+
+        });
+    </script>
+
+    <p>
+        <h4 id="x">X:</h4>
+        <h4 id="y">Y:</h4>    
+    </p>
+
+</body>
+</html>

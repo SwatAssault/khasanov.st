@@ -1,0 +1,8 @@
+#clear, #delete {
+    width: 40px;
+}
+
+#num1, #num2, #num3, #num4, #num5, #num6, #num7, #num8, #num9, #plus, #minus, #mult, #num0, #dot, #divide, #equals {
+    width: 50px;
+    height: 50px;
+}
