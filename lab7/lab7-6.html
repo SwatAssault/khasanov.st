@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ИВТ-417 Хасанов Р.М.</title>
+</head>
+<body>
+
+    <h2><a href="lab7.php">На главную</a></h2>
+
+    <style>
+        .invalid {
+            border-color: red;
+            border-width: 2px;
+        }
+    </style>
+
+    <script>
+
+        function checkAll(sub) {
+            if (!(nameChanged() && passChanged() && passConfirmChanged() && emailChanged() && msgChanged())) {
+                sub.disabled = true;
+            } else {
+                sub.disabled = false;
+                alert("Успех!");
+            }
+        }
+
+        function disableSubmit(disable) {
+            var submitBtn = document.getElementById('submitBtn');
+            if (disable) {
+                submitBtn.disabled = true;
+            } else {
+                submitBtn.disabled = false;
+            }
+        }
+
+        function nameChanged() {
+            var name = document.getElementById('name');
+            if (name.value.length == 0) {
+                name.classList.add("invalid");
+                alert("Заполните имя");
+                disableSubmit(true);
+                return false;
+            } else {
+                name.classList.remove("invalid");
+                disableSubmit(false);
+                return true;
+            }
+        }
+
+        function passChanged() {
+            var password = document.getElementById('password');
+            var password_confirm = document.getElementById('password_confirm');
+            if (password.value.length <= 4) {
+                password.classList.add("invalid");
+                alert("Пароль должен содержать более 4 символов");
+                disableSubmit(true);
+                return false;
+            } else {
+                password.classList.remove("invalid");
+                disableSubmit(false);
+                return true;
+            }
+        }
+
+        function passConfirmChanged() {
+            var password = document.getElementById('password');
+            var password_confirm = document.getElementById('password_confirm');
+
+            if (password_confirm.value !== password.value) {
+                password_confirm.classList.add("invalid");
+                alert("Пароли не совпадают");
+                disableSubmit(true);
+                return false;
+            } else {
+                password_confirm.classList.remove("invalid");
+                disableSubmit(false);
+                return true;
+            }
+        }
+        
+        function emailChanged() {
+            var email = document.getElementById('e_mail');
+            if (!email.value.includes('@')) {
+                email.classList.add("invalid");
+                alert("Неверный email");
+                disableSubmit(true);
+                return false;
+            } else {
+                email.classList.remove("invalid");
+                disableSubmit(false);
+                return true;
+            }
+        }
+
+        function msgChanged() {
+            var msg = document.getElementById('msg');
+            if (msg.value.length <= 10) {
+                msg.classList.add("invalid");
+                alert("Сообщение должно содержать более 10 символов");
+                disableSubmit(true);
+                return false;
+            } else {
+                msg.classList.remove("invalid");
+                disableSubmit(false);
+                return true;
+            }
+        }
+
+    </script>
+
+    <H2>Заполните поля:</H2>
+    <form>
+
+        <p>Ваше имя: <input id="name" size="50" type="text" onchange="nameChanged();">
+        <p><br>Пароль: <input id="password" size="20" type="password" onchange="passChanged();">
+        <p><br>Подтверждение пароля: <input id="password_confirm" size="20" type="password" onchange="passConfirmChanged();">
+        <p><br>Е-mail: <input id="e_mail" size="30" type="text" onchange="emailChanged();">
+        
+        <p><br>Тема сообщения: <input id="msg_title" size="30" type="text">
+        <p><br>Сообщение: <textarea id="msg" rows="4" cols="40" onchange="msgChanged();">
+        </textarea>
+
+        <p><br><input id="submitBtn" type="submit" value="Отправить" onclick="checkAll(this);">
+        <p><br><input id="id" type="reset" value="Очистить"></p>
+    </form>
+
+    
+
+</body>
+</html>

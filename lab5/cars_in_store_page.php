@@ -47,7 +47,7 @@
 
         $mysqli->close();
         
-        echo "<br><a href='gen_xls.php'>Сохранить в Excel</a><br>";
+        echo "<br><a href='gen_xls.php' target='_blank'>Сохранить в Excel</a><br>";
 
         echo "<br><a href='gen_pdf.php'>Сохранить в PDF</a>";
 

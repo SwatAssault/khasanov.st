@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Хасанов Р.М. ИВТ-417</title>
+    <script src="jquery.js"></script>
+</head>
+<body>
+
+    <h2><a href="lab8.php">На главную</a></h2>
+
+    <script>
+        $(document).ready(function(){
+
+            function setColor() {
+                var colors = ["red", "black", "green", "yellow", "blue"];
+                var i = Math.floor(Math.random() * 5);
+                return colors[i];
+            }
+
+            $('.btn').click(function(){
+                $('body').css('background', setColor());
+            });
+        });
+    </script>
+
+    <button class="btn">Поменять цвет</button>
+</body>
+</html>

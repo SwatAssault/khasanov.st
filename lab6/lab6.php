@@ -1,8 +1,15 @@
-<h1>Лабораторная работа 6</h1>
-<h2>Упражнения:</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Хасанов Р.М. ИВТ-417</title>
+</head>
+<body>
+    <h1>Лабораторная работа 6</h1>
 
-<ul>
-	<li>
+    <ul>
+        <li>
 		<a href="/lab6/lab6-1.html">Задание 1</a>	
 	</li>
 	<li>
@@ -23,4 +30,7 @@
 	<li>
 		<a href="/lab6/lab6-7.html">Задание 7</a>	
 	</li>
-</ul>
+    </ul>
+</body>
+</html>
+

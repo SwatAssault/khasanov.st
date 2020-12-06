@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Хасанов Р.М. ИВТ-417</title>
+    <script src="jquery.js"></script>
+</head>
+<body>
+    <h2><a href="lab8.php">На главную</a></h2>
+
+    <script>
+        $(document).ready(function(){
+
+            var answers = Math.floor(5 + Math.random() * (50 + 1 - 5) + 1);
+
+            var val1 = simulate(answers);
+            var val2 = simulate(answers - val1);
+            var val3 = simulate(answers - val2 - val1);
+            var val4 = answers - val2 - val1 - val3;
+
+            var clicked = false;
+
+                $('input').click(function(){
+                    if (!clicked) {
+                        $('#q1').after("<span class='msg'> (" + Math.floor(val1 / answers * 100) + "%)</span>");
+                        $('#q2').after("<span class='msg'> (" + Math.floor(val2 / answers * 100) + "%)</span>");
+                        $('#q3').after("<span class='msg'> (" + Math.floor(val3 / answers * 100) + "%)</span>");
+                        $('#q4').after("<span class='msg'> (" + Math.floor(val4 / answers * 100) + "%)</span>");
+                        clicked = true;
+                    }
+                });
+
+        });
+
+        function simulate(max) {
+            return Math.floor(Math.random() * (max + 1));
+        }
+
+    </script>
+
+    <h2>Ответьте на вопрос</h2>
+    <h4>О чем Вы думаете перед сном?</h4>
+    <p>Варианты ответов:</p>
+    <p><input type="radio" name="q" value="v1"><span id="q1">О работе</span></p>
+    <p><input type="radio" name="q" value="v2"><span id="q2">О любимых людях</span></p>
+    <p><input type="radio" name="q" value="v3"><span id="q3">Засыпаю сразу</span></p>
+    <p><input type="radio" name="q" value="v4"><span id="q4">О еде</span></p>
+
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Хасанов Р.М. ИВТ-417</title>
+    <script src="jquery.js"></script>
+</head>
+<body>
+    <h2><a href="lab8.php">На главную</a></h2>
+
+    <style>
+        div {
+            position: absolute;
+            top: 100px;
+            left: 100px;
+        }
+
+        footer {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 100px;
+            width: 100%;
+            overflow: hidden;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function(){
+
+            var div = $('div');
+
+            $("#up").click(function(){
+                div.animate({'marginTop': "-=100px"}, "slow");
+            });
+
+            $("#left").click(function(){
+                div.animate({'marginLeft': "-=100px"}, "slow");
+            });
+
+            $("#right").click(function(){
+                div.animate({'marginLeft': "+=100px"}, "slow");
+            });
+
+            $("#down").click(function(){
+                div.animate({'marginTop': "+=100px"}, "slow");
+            });
+        });
+    </script>
+
+    <div>
+        <img src="pic.png" alt="Картинки нет">
+    </div>
+    
+</body>
+
+<footer>
+    <p>
+        <button id="up">Вверх</button>
+        <button id="down">Вниз</button>
+    </p>
+
+    <p>
+        <button id="left">Влево</button>
+        <button id="right">Вправо</button>
+    </p>
+</footer>
+
+</html>

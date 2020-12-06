@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Хасанов Р.М. ИВТ-417</title>
+    <script src="jquery.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+</head>
+<body>
+    <h2><a href="lab8.php">На главную</a></h2>
+
+    <p>Перетаскивайте Бараша</p>
+    <p>
+        <h4 id="sum">Увеличиваем, пока Бараш перетаскивается: 0</h4>
+    </p>
+
+    <script>
+        $(document).ready(function(){
+            
+            var sum = 0;
+            var isDown = false;
+
+            var pic = $("img");
+
+            pic.draggable();
+
+            pic.on('mouseup', function(){
+                pic.animate({height: '340'}, "fast");
+                isDown = false;
+                console.log("up");
+            });
+
+            pic.on('mousedown', function(){
+                pic.animate({height: '280'}, "fast");
+                isDown = true;
+                console.log("down");
+            });
+           
+            pic.on('mousemove', function(){
+                if (isDown) {
+                    sum += 1;
+                    $('#sum').text("Увеличиваем, пока Бараш перетаскивается: " + sum);
+                }
+            });
+
+        });
+    </script>
+
+    <div>
+        <img src="pic.png" alt="Картинки нет">
+    </div>
+
+</body>
+</html>
