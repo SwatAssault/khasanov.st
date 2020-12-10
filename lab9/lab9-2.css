@@ -1,0 +1,22 @@
+.content {
+    padding-bottom: 10px;
+}
+
+.email-block {
+    padding-left: 50px;
+    width: 50%;
+    background-color: rgba(214, 255, 163, 1);
+}
+
+p {
+    word-wrap : break-word;
+}
+
+.invalid {
+    border-color: red;
+    border-width: 2px;
+}
+
+.deleteBtn {
+    margin-bottom: 5px;
+}

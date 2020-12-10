@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Хасанов Р.М. ИВТ-417</title>
+    <link rel="stylesheet" type="text/css" href="lab9-2.css">
+    <script src="jquery.js"></script>
+</head>
+<body>
+    <h2><a href='lab9.php'>На главную</a></h2>
+
+    <script>
+
+        var currentAmount = 0;
+
+        $(document).ready(function(){
+            
+            $('#msg').val("");
+            
+            loadEmails();
+
+            $('#form').submit(function(e) {
+                e.preventDefault();
+                var name = $('#name').val();
+                var email = $('#email').val();
+                var message = $('#msg').val();
+                var msg_title = $('#msg_title').val();
+
+                var ok = true;
+                $('.error').remove();
+
+                if (name.length < 1) {
+                    $('#name').addClass("invalid");
+                    $('#name').after('<span class="error">Заполните поле</span>');
+                    ok = false;
+                } else {
+                    $('#name').removeClass("invalid");
+                }
+                if (!email.includes('@')) {
+                    $('#email').addClass("invalid");
+                    $('#email').after('<span class="error">Неверный email</span>');
+                    ok = false;
+                } else {
+                    $('#email').removeClass("invalid");
+                }
+                if (message.length < 10) {
+                    $('#msg').addClass("invalid");
+                    $('#msg').after('<span class="error">Сообщение не должно быть менее 10 символов</span>');
+                    ok = false;
+                } else {
+                    $('#msg').removeClass("invalid");
+                }
+
+                if (ok) {
+                    sendEmail(name, email, msg_title, message);
+                }
+
+            });
+
+            function sendEmail(name, email, title, message) {
+                var today = new Date();
+                var dateAndTime = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + " " +
+                    today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                $.ajax({
+                    method: "POST",
+                    url: "lab9-2.php",
+                    data: { 
+                        name: name,
+                        email: email,
+                        title: title,
+                        message: message,
+                        time: dateAndTime 
+                    },
+                    success: function(response) {
+                        alert(response);
+                        insertDiv(name, title, message, dateAndTime, email);
+                    }
+                });
+            }
+
+            function removeRedBorders() {
+                $('#name').removeClass("invalid");
+                $('#msg').removeClass("invalid");
+                $('#email').removeClass("invalid");
+                $('.error').remove();
+            }
+
+            function loadEmails() {
+                $.ajax({
+                    method: "POST",
+                    url: "loadEmails.php",
+                    success: function(response) {
+                        news = JSON.parse(response);
+                        news.forEach(element => {
+                            element = JSON.parse(element);
+                            insertDiv(element.name, element.title, element.message, element.time, element.email);
+                        });
+                    }
+                });
+            }
+            
+            function getLastDiv() {
+                if (currentAmount !== 0) {
+                    return $('#email' + currentAmount);
+                } else {
+                    return $("#h");
+                }
+                
+            }
+
+            function insertDiv(name, title, message, time, email) {
+                lastDiv = getLastDiv();
+                currentAmount += 1;
+                lastDiv.after(
+                    "<div id='email" + currentAmount + "'  class='email-block'>" + 
+                        "<h3>" + name + " (" + email +")</h3>" + "<p>" + time + "</p>" +"<span> отправил(а) сообщение:</span>" + 
+                        "<div class='content'>" +
+                            "<h4>" + title + "</h4>" +
+                            "<p>" + message + "</p>" +
+                        "</div>" +
+                        "<input class='deleteBtn' type='button' value='Удалить'></input>" +
+                    "</div>"
+                );
+            }
+
+        });
+
+    </script>
+
+    <div id="form">
+        <h2>Отправьте письмо:</h2>
+        <form action="" method="post">
+            <p>Имя: <input id="name" size="50" type="text" onchange="removeRedBorders();">
+            <p><br>Е-mail: <input id="email" size="30" type="text" onchange="removeRedBorders();">
+            <p><br>Тема сообщения: <input id="msg_title" size="30" type="text">
+            <p><br>Сообщение: <textarea id="msg" rows="4" cols="40" onchange="removeRedBorders();">
+            </textarea>
+
+            <p><br><input type="submit" value="Отправить" />
+            <p><br><input id="id" type="reset" value="Очистить"></p>
+        </form>
+    </div>
+    
+    <div id="emails">
+        <h2 id="h">Отправленные письма:</h2>
+
+    </div>
+
+</body>
+</html>
