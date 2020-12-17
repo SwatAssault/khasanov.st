@@ -1,0 +1,34 @@
+body {
+    text-align: center;
+}
+
+#wrapper {
+    width: 800px;
+    display: inline-block;
+    border: brown;
+    border-style: solid;
+}
+
+#randomNameBtn {
+    margin-left: 10px;
+}
+
+textarea {
+    resize: none;
+}
+
+#appearanceContent {
+    display: flex;
+}
+
+#appearanceRight {
+    margin-left: 70px;
+}
+
+#petImg {
+    margin-bottom: 10px;
+}
+
+#stats-wrap {
+    display: flex;
+}
