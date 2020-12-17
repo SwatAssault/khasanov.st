@@ -59,7 +59,7 @@
 
             function sendEmail(name, email, title, message) {
                 var today = new Date();
-                var dateAndTime = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + " " +
+                var dateAndTime = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear() + " " +
                     today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                 $.ajax({
                     method: "POST",

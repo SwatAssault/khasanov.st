@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ИВТ-417 Хасанов Р.М.</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="lab10.css">
+    <script src="scripts.js"></script>
+</head>
+<body>
+
+    <script>
+        $(document).on('ready', function(){
+            init();
+
+            $("#randomNameBtn").click(function() {
+                var currentName = $("#name").val();
+                var newName = getRandomName();
+                while (currentName === newName){
+                    newName = getRandomName();
+                }
+                $("#name").val(newName);
+                setName(newName);
+            });
+
+            $("#origin0,#origin1,#origin2,#origin3,#origin4").click(function(){
+                $("#originSpan").remove();
+                setOrigin(this.id.split('n')[1]);
+                $("#status").after("<span id='originSpan'> " + character.origin + " </span>");
+            });
+
+            $("#selectSex").on('selectmenuchange', function() {
+                $("#img").remove();
+                if ($(this).val() === "male") {
+                    $("#appearanceImg").append("<img id='img' src='male-" + character["class"] + ".png' alt='Нет'>");
+                } else {
+                    $("#appearanceImg").append("<img id='img' src='female-" + character["class"] + ".png' alt='Нет'>");
+                }
+                character["sex"] = $(this).val();
+            });
+
+            $("#selectClass").on('selectmenuchange', function() {
+                $("#img").remove();
+                if ($(this).val() === "knight") {
+                    $("#appearanceImg").append("<img id='img' src='" + character['sex'] + "-knight.png' alt='Нет'>");
+                } else if ($(this).val() === "archer") {
+                    $("#appearanceImg").append("<img id='img' src='" + character['sex'] + "-archer.png' alt='Нет'>");
+                } else {
+                    $("#appearanceImg").append("<img id='img' src='" + character['sex'] + "-mage.png' alt='Нет'>");
+                }
+                character["class"] = $(this).val();
+            });
+
+            $("#selectPet").on('selectmenuchange', function() {
+                $("#petImg").remove();
+                if ($(this).val() === "pokemon") {
+                    $("#petImgDiv").append("<img id='petImg' src='pokemon.png' alt='Нет' title='Питомец будет путешествовать с Вами после Главы 1'>");
+                } else if ($(this).val() === "cheetah") {
+                    $("#petImgDiv").append("<img id='petImg' src='cheetah.png' alt='Нет' title='Питомец будет путешествовать с Вами после Главы 1'>");
+                } else if ($(this).val() === "bear") {
+                    $("#petImgDiv").append("<img id='petImg' src='bear.png' alt='Нет' title='Питомец будет путешествовать с Вами после Главы 1'>");
+                } else {
+                    $("#petImgDiv").append("<img id='petImg' src='dog.png' alt='Нет' title='Питомец будет путешествовать с Вами после Главы 1'>");
+                }
+                character["pet"] = $(this).val();
+            });
+
+            $("#appearenceTipBtn").click(function(){
+                $("#appearenceTip").dialog("open");
+            });
+
+            $("#save").click(function(){
+                $("#previewContent").remove();
+                $("#footer").remove();
+                preparePreview();
+                $("#finishCreating").dialog("open");
+            });
+
+            function preparePreview() {
+                var sex = character.sex === "male" ? "Мужской" : "Женский";
+                var Chclass = character.class === "knight" ? "Воин" : character.class === "archer" ? "Лучник" : "Волшебник";
+                var date = character.date;
+                var pet = character.pet === "dog" ? "КиберЛис" : character.pet === "cheetah" ? "ГрацГепард" : character.pet === "bear" ?
+                "Рубиновый Медведь" : "ПсевдоПокемон";
+                $("#previewText").append(
+                    "<div id='previewContent' style='display: flex;''>" +
+                        "<img id='previewImg' src='"+ character.sex +"-"+ character.class +".png' alt='Нет'>" +
+                        "<div id='previewRight'>" + 
+                            "<p><b>Имя:</b> " + character.name + "</p>" + 
+                            "<p><b>Пол:</b> " + sex + "</p>" + 
+                            "<p><b>Класс:</b> " + Chclass + "</p>" +
+                            "<p><b>Происхождение:</b> " + character.origin + "</p>" + 
+                            "<div id='petPreview'>" +
+                                "<h4>Питомец</h4>" +
+                                "<p><b>Имя:</b> " + character.petName + " - " + pet + "</p>" + 
+                                "<div id='petImgDiv'>" + 
+                                    "<img id='petImg' src='" + character.pet + ".PNG' alt='Нет'>" +
+                                "</div>" + 
+                            "</div>" + 
+                        "</div>" + 
+                    "</div>"  +
+                    "<div id='footer'" +
+                        "<p><b>Навыки</b></p>" +
+                        "<p>Сила: " + character.strength + "</p>" + 
+                        "<p>Интеллект: " + character.intelligence + "</p>" + 
+                        "<p>Ловкость: " + character.agility + "</p>" + 
+                        "<p>Выносливость: " + character.stamina + "</p>" + 
+                        "<p><b>Уровень сложности</b></p>" + 
+                        "<p>" + getDifficultyLevel(character.difficulty) + "</p>" +
+                        "</hr>" +
+                        "<button id='continueBtn' class='ui-button ui-widget ui-corner-all' onclick='f()'>Продолжить</button>" +
+                    "</div>"
+                );
+            }
+        });
+
+        function incStats(button) {
+            if (character.sparePoints > 0) {
+                character.sparePoints -= 1;
+                character[button.id] += 1;
+                var label = button.id === "strength" ? "Сила: " : button.id === "intelligence" ? "Интеллект: " :
+                button.id === "stamina" ? "Выносливость: " : "Ловкость: ";
+                $("#" + button.id + "Label").html(label + character[button.id] + " ");
+                $("#sparePoints").text("Свободных очков: " + character.sparePoints);
+            }
+        }
+
+        function decStats(button) {
+            if (character[button.id.split("-")[0]] > 0) {
+                character.sparePoints += 1;
+                character[button.id.split("-")[0]] -= 1;
+                var label = button.id.split("-")[0] === "strength" ? "Сила: " : button.id.split("-")[0] === "intelligence" ? "Интеллект: " :
+                button.id.split("-")[0] === "stamina" ? "Выносливость: " : "Ловкость: ";
+                $("#" + button.id.split("-")[0] + "Label").html(label + character[button.id.split("-")[0]] + " ");
+                $("#sparePoints").text("Свободных очков: " + character.sparePoints);
+            }
+        }
+
+        function init() {
+            $(document).tooltip();
+            $('#tabs').tabs();
+            $("#accordion").accordion({
+                collapsible: true,
+                active: false,
+                autoHeight: false,
+                heightStyle: "content"
+            });
+            $("#selectSex").selectmenu();
+            $("#selectClass").selectmenu();
+            $("#selectPet").selectmenu();
+            $("#datepicker").datepicker();
+            $("#appearenceTip").dialog({
+                autoOpen: false,
+                show: {
+                    effect: "drop",
+                    duration: 500
+                },
+                hide: {
+                    effect: "drop",
+                    duration: 500
+                }
+            });
+            $("#finishCreating").dialog({
+                autoOpen: false,
+                resizable: false,
+                modal: true,
+                width:'auto',
+                show: {
+                    effect: "drop",
+                    duration: 500
+                },
+                hide: {
+                    effect: "drop",
+                    duration: 500
+                }
+            });
+            $("#continue").dialog({
+                autoOpen: false,
+                resizable: false,
+                modal: true,
+                width:'auto',
+                show: {
+                    effect: "drop",
+                    duration: 500
+                },
+                hide: {
+                    effect: "drop",
+                    duration: 500
+                }
+            });
+            $("#difficulty").slider({
+                range: "min",
+                value: 0,
+                min: 0,
+                max: 3,
+                slide: function(event, ui) {
+                    $("#difficultyLabel").text(getDifficultyLevel(ui.value));
+                    character['difficulty'] = ui.value;
+                }
+            });
+            $("#difficultyLabel").text(getDifficultyLevel(0));
+            $(".plusBtn").button();
+            $( "#city" ).autocomplete({
+                source: cities
+            });
+            character['sex'] = "male";
+            character['class'] = "knight";
+            character['pet'] = "pokemon";
+            character['petName'] = "Archibald";
+            character['name'] = getRandomName();
+            character['sparePoints'] = 8;
+            character['strength'] = 0;
+            character['intelligence'] = 0;
+            character['agility'] = 0;
+            character['stamina'] = 0;
+            character['difficulty'] = 0;
+            setOrigin(0);
+            $("#sparePoints").text("Свободных очков: " + character.sparePoints);
+        }
+
+    </script>
+
+    <div id="wrapper">
+        <h2>Создайте своего персонажа</h2>
+        <div id="tabs">
+            <ul>
+                <li><a href="#tabs-1">Внешность</a></li>
+                <li><a href="#tabs-2">Биография</a></li>
+                <li><a href="#tabs-3">Навыки</a></li>
+            </ul>
+            <div id="tabs-1">
+                <h3>Внешность</h3>
+                <p>Здесь Вы можете настройть внешность персонажа</p>
+                <hr/>
+                <div id="appearanceContent">
+                    <div id="appearanceImg">
+                        <img id="img" src="male-knight.png" alt="Нет">
+                    </div>
+                    <div id="appearanceRight">
+                        <button id="appearenceTipBtn" class="ui-button ui-widget ui-corner-all">Подсказка</button>
+                        <p>
+                            Пол
+                            <select id="selectSex">
+                                <option value="male">Мужской</option>
+                                <option value="female">Женский</option>
+                            </select>
+                        </p>
+                        <p>
+                            Класс
+                            <select id="selectClass">
+                                <option value="knight">Воин</option>
+                                <option value="archer">Лучник</option>
+                                <option value="mage">Волшебник</option>
+                            </select>
+                        </p>
+                        <hr/>
+                        <div id="petOptions">
+                            <h4>Питомец</h4>
+                            <p>Имя <input id="petName" type="text" onchange="setPetName(this);"/></p>
+                            <div id="petImgDiv">
+                                <img id="petImg" src="pokemon.PNG" alt="Нет" title='Питомец будет путешествовать с Вами после Главы 1'>
+                            </div>
+                            <select id="selectPet">
+                                <option value="pokemon">ПсевдоПокемон</option>
+                                <option value="dog">КиберЛис</option>
+                                <option value="cheetah">ГрацГепард</option>
+                                <option value="bear">Рубиновый Медведь</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+            <div id="tabs-2">
+                <h3>Биография</h3>
+                <p>Придумайте биографию персонажа</p>
+                <hr/>
+                <p>Имя <input id="name" type="text" onchange="setName();"/><button id="randomNameBtn" class="ui-button ui-widget ui-corner-all">Случайное имя</button></p>
+                <hr/>
+                <p>Дата рождения: <input type="text" id="datepicker"></p>
+                <hr/>
+                <p>Город: <input id="city"></p>
+                <hr/>
+                <h4 id="status">Ваше происхождение: </h4>
+                <h4>История происхождения</h4>
+                <textarea rows="10" cols="75" name="text"></textarea>
+                <button id="origin4" class="ui-button ui-widget ui-corner-all">Выбрать свою историю</button>
+                <h4>Готовые истории</h4>
+                <div id="accordion">
+                    <h3>Порядочный гражданин</h3>
+                    <div>
+                      <p>
+                      Вы получили среднее образование, с детства трудились на работе, принося пользу обществу, платили налоги.
+                      Случайное стечение обстоятельств вынуждает Вас отправиться в путешествие.
+                      </p>
+                      <button id="origin0" class="ui-button ui-widget ui-corner-all">Выбрать</button>
+                    </div>
+                    <h3>Разбойник</h3>
+                    <div>
+                      <p>
+                      Вы грабили и убивали сколько помните себя. Вы существуете за счет украденных средств и вещей.
+                      Вы отправляетесь в путешествие за тем, чтобы получить самое крупное богатство в своей жизни.
+                      </p>
+                      <button id="origin1" class="ui-button ui-widget ui-corner-all">Выбрать</button>
+                    </div>
+                    <h3>Бывший убийца</h3>
+                    <div>
+                      <p>
+                      Были времена, когда убийство человека было для Вас обыденностью. Сейчас Вам сложно вспомнить, зачем Вы это делали.
+                      Вы отправляетесь в путешествие, в надежде найти успокоение и начать новую жизнь.
+                      </p>
+                      <button id="origin2" class="ui-button ui-widget ui-corner-all">Выбрать</button>
+                    </div>
+                    <h3>Высшая кровь</h3>
+                    <div>
+                      <p>
+                      Вы - выходец из одной из самый богатых и привилегированных семей на данной территории.
+                      Вы не знаете ни одной минуты жизни в нищете и голоде. Вы отправляетесь в путешествие на поиски приключений.
+                      </p>
+                      <button id="origin3" class="ui-button ui-widget ui-corner-all">Выбрать</button>
+                    </div>
+                </div>
+            </div>
+            <div id="tabs-3">
+                <h2>Навыки</h2>
+                <p>Здесь Вы выбираете, какими навыками обладает персонаж</p>
+                <hr/>
+                <h4>Основные характеристики</h4>
+                <p>Распределите очки</p>
+                <p id="sparePoints">Свободных очков: </p>
+                <p><span id="strengthLabel">Сила: 0 </span>
+                    <button id="strength" class="ui-button ui-widget ui-corner-all" onclick="incStats(this);">+</button>
+                    <button id="strength-" class="ui-button ui-widget ui-corner-all" onclick="decStats(this);">-</button>
+                </p>
+                <p><span id="intelligenceLabel">Интеллект: 0 </span>
+                    <button id="intelligence" class="ui-button ui-widget ui-corner-all" onclick="incStats(this);">+</button>
+                    <button id="intelligence-" class="ui-button ui-widget ui-corner-all" onclick="decStats(this);">-</button>
+                </p>
+                <p><span id="agilityLabel">Ловкость: 0 </span>
+                    <button id="agility" class="ui-button ui-widget ui-corner-all" onclick="incStats(this);">+</button>
+                    <button id="agility-" class="ui-button ui-widget ui-corner-all" onclick="decStats(this);">-</button>
+                </p>
+                <p><span id="staminaLabel">Выносливость: 0 </span>
+                    <button id="stamina" class="ui-button ui-widget ui-corner-all" onclick="incStats(this);">+</button>
+                    <button id="stamina-" class="ui-button ui-widget ui-corner-all" onclick="decStats(this);">-</button>
+                </p>
+                <hr/>
+                <p><b>Уровень сложности: </b><div id="difficulty"></div></p>
+                <p id="difficultyLabel"></p>
+            </div>
+        </div>
+        <button id="save" class="ui-button ui-widget ui-corner-all">Сохранить</button>
+    </div>
+
+    <div id="appearenceTip" title="Подсказка: Внешность">
+        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;">
+        </span>Вы сможете поменять внешность персонажа в любой момент после началы игры</p>
+    </div>
+    
+    <div id="continue" title="">
+        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;">
+        </span>Персонаж сохранен</p>
+    </div>
+
+    <div id="finishCreating" title="Вы действительно хотите закончить?">
+        <p id="previewText"><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;">
+        </span>Все, что Вы не выбрали, будет заполнено значениями по умолчанию</p>
+        <script>
+            function f() {
+                $("#continue").dialog("open");
+            }
+        </script>
+    </div>
+</body>
+</html>
